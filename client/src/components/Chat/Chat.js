@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import {Infobar} from '../Infobar/Infobar';
 import {Input} from '../Input/Input';
 import {Messages} from '../Messages/Messages';
+import {TextContainer} from '../TextContainer/TextContainer';
 
 let socket;
 
@@ -13,6 +14,7 @@ export const Chat = ({ location }) => {
     const [room, setRoom] = useState('');
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [users, setUsers] = useState('');
     const ENDPOINT = 'localhost:5000';
 
     useEffect(() => {
@@ -40,7 +42,11 @@ export const Chat = ({ location }) => {
         socket.on('message', message => {
             console.log('msg is: '+message);
             setMessages(messages => [...messages, message]);
-        })
+        });
+
+        socket.on("roomData", ({ users }) => {
+            setUsers(users);
+          });
     },[]);
 
     //function to send message
@@ -62,6 +68,7 @@ export const Chat = ({ location }) => {
                 setMessage={setMessage}
                 sendMessage={sendMessage}/>
             </div>
+            <TextContainer users={users}/>
         </div>
     )
 }
