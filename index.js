@@ -2,12 +2,16 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const router = require('./router');
+const cors = require('cors');
 const {addUser, removeUser, getUser, getAllUsersInRoom} = require('./users');
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+
+app.use(router);
+app.use(cors());  //cross origin resource sharing.... if i dont add this then may be some request get ignored
 
 io.on('connection', (socket)=> {  // socket- is a client instance of socket which is in Chat.js
 
@@ -44,6 +48,5 @@ io.on('connection', (socket)=> {  // socket- is a client instance of socket whic
     })
 })
 
-app.use(router);
 server.listen(PORT, () => console.log(`server started running on ${PORT}`))
 
