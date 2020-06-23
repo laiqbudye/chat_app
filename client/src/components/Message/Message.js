@@ -10,7 +10,6 @@ export const Message = ({message: { text, user }, name }) => {
     if (user === curUserName) {
         isSentByCurrentUser = true;
     }
-    console.log("sent by user:"+isSentByCurrentUser)
     return (
         isSentByCurrentUser
             ? (

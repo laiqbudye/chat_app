@@ -1,8 +1,7 @@
 const users = [];
 
 const addUser = ({id, name, room}) => {
-    console.log('name is: '+name);
-    console.log('room is: '+room);
+    
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();
 

@@ -40,7 +40,6 @@ export const Chat = ({ location }) => {
 
     useEffect(() => {
         socket.on('message', message => {
-            console.log('msg is: '+message);
             setMessages(messages => [...messages, message]);
         });
 
@@ -57,7 +56,6 @@ export const Chat = ({ location }) => {
             socket.emit('sendMessage', message, () => setMessage('')); // emitting send msg event which will listen by server and in callback function clearing current messgae
         }
     };
-    console.log('are '+messages);
     return (
         <div className='outerContainer'> 
             <div className='container'>

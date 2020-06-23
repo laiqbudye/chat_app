@@ -10,7 +10,6 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (socket)=> {  // socket- is a client instance of socket which is in Chat.js
-    console.log(`We have a new connection...`);
 
     socket.on('join', ({name, room}, callback) => {
        
@@ -30,8 +29,7 @@ io.on('connection', (socket)=> {  // socket- is a client instance of socket whic
 
     socket.on('sendMessage', (message, callback) => {
         const user = getUser(socket.id);
-        console.log("msg at server" +message);
-        console.log('socket id is:' +socket.id);
+    
         io.to(user.room).emit('message', { user: user.name, text: message});
         io.to(user.room).emit('roomData', {room: user.room, users: getAllUsersInRoom(user.room)});
         callback();
