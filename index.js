@@ -3,6 +3,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const router = require('./router');
 const cors = require('cors');
+const path = require('path');
 const {addUser, removeUser, getUser, getAllUsersInRoom} = require('./users');
 const PORT = process.env.PORT || 5000;
 
@@ -47,6 +48,17 @@ io.on('connection', (socket)=> {  // socket- is a client instance of socket whic
         }
     })
 })
+
+// serve static assets in production 
+
+if(process.env.NODE_ENV === 'production') {
+    // set static folder
+    app.use(express.static('client/build'));
+    
+    app.get('*', (req,res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+}
 
 server.listen(PORT, () => console.log(`server started running on ${PORT}`))
 
