@@ -23,6 +23,8 @@ io.on('connection', (socket)=> {  // socket- is a client instance of socket whic
 
         socket.join(user.room);
 
+        //emitting all available users in current room
+        io.to(user.room).emit('roomData', {room: user.room, users: getAllUsersInRoom(user.room)});
         callback();
     });
 
@@ -31,7 +33,7 @@ io.on('connection', (socket)=> {  // socket- is a client instance of socket whic
         console.log("msg at server" +message);
         console.log('socket id is:' +socket.id);
         io.to(user.room).emit('message', { user: user.name, text: message});
-
+        io.to(user.room).emit('roomData', {room: user.room, users: getAllUsersInRoom(user.room)});
         callback();
     });
 
